@@ -1,4 +1,4 @@
-﻿----------------  /* WaDE Central Catalog Data Ingestion into PostgreSQL*/  -----------------
+﻿--------------------  /* General PostgreSQL Data Ingestion Script */  ----------------------
 
 -- The following Code performs a http_get call, which returns a Web Service in XML format, and ingests the data from the Web Service return into PostgreSQL table 
 
