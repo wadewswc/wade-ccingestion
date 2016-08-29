@@ -26,7 +26,7 @@ ALTER TABLE "WADE"."XMLContent"
 
 /*******************************************************************************************/
 ----------- Step 2: Insert XML return from http_get call into a temporary table ------------
-------------------- Leave out State by trial if the script produces errors -----------------
+------------------- Leave out State by trial if the script produces error ------------------
 /*******************************************************************************************/
 
 
