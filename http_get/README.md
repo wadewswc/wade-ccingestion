@@ -1,4 +1,4 @@
-# Use of http_get function for WaDE Central Catalog Data Ingestion
+# Use of http_get function for Web Service Returns
 A collaborative activity of the Water Data Exchange or WaDE project
 
 
