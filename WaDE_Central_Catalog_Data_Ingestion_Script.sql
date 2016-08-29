@@ -1,6 +1,6 @@
 ﻿----------------  /* WaDE Central Catalog Data Ingestion into PostgreSQL*/  -----------------
 
--- The following Code performs a http_get call, which returns a Web Service in XML format, and ingests the data from the Web Service return into PostgreSQL table 
+-- The following Code performs a http_get call, which returns a Web Service in XML format, and ingests the data from the Web Serice return into PostgreSQL table 
 
 
 /*******************************************************************************************/
@@ -26,12 +26,51 @@ ALTER TABLE "WADE"."XMLContent"
 
 /*******************************************************************************************/
 ----------- Step 2: Insert XML return from http_get call into a temporary table ------------
+------------------- Leave out State by trial if the script produces errors -----------------
 /*******************************************************************************************/
 
 
+-- IDAHO
 INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
 
-SELECT content FROM http_get('http://localhost/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=SAMPLE1');
+SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
+--
+
+-- OREGON
+--INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+--SELECT content FROM http_get('http://wade.wrd.state.or.us/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OREGON-WRD');
+--
+
+-- UTAH
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://www.westernstateswater.org/UTDWRT_Demo/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTWRE');
+--
+
+-- COLORADO
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://www.westernstateswater.org/Colorado/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid =CODWR');
+--
+
+-- WYOMING 
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://www.westernstateswater.org/Wyoming/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYWDC');
+--
+
+-- KANSAS
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://wade.kda.ks.gov/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=KS-KDA');
+--
+
+-- OKLAHOMA 
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://data.owrb.ok.gov:8080/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OWRD');
+
 
 
 /*******************************************************************************************/
@@ -84,7 +123,7 @@ CREATE TABLE "WADE"."CATALOG_SUMMARY_MV"
   "DATACATEGORY" text NOT NULL,
   "DATATYPE" text NOT NULL,
   "STATE" character varying(2),
-  "REPORT_UNIT_ID" character varying(35) NOT NULL,
+  "REPORT_UNIT_ID" character varying(35),
   "COUNTY_FIPS" character(5),
   "HUC" character varying(12),
   CONSTRAINT "CATALOG_SUMMARY_MV_pkey" PRIMARY KEY ("ID")
