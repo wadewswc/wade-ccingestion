@@ -13,3 +13,5 @@ Next, the unnecessary snippets from XML Data are removed, and the ‘character v
 The table where the data will be ingested into is created next, and finally XPATH is used to extract data from the XML content into respective columns in the table. 
 
 If for any reason, the http_get return is empty, it will get recorded as a NULL value in the temporary table. And the later part of the code will simply skip the NULL row and complete the rest of the query.
+
+The http_get extension will give a timeout error if the web service retrieval takes too long.
