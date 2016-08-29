@@ -123,7 +123,7 @@ CREATE TABLE "WADE"."CATALOG_SUMMARY_MV"
   "DATACATEGORY" text NOT NULL,
   "DATATYPE" text NOT NULL,
   "STATE" character varying(2),
-  "REPORT_UNIT_ID" character varying(35),
+  "REPORT_UNIT_ID" character varying(35) NOT NULL,
   "COUNTY_FIPS" character(5),
   "HUC" character varying(12),
   CONSTRAINT "CATALOG_SUMMARY_MV_pkey" PRIMARY KEY ("ID")
