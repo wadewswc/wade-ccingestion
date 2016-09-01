@@ -70,7 +70,13 @@ SELECT content FROM http_get('http://wade.kda.ks.gov/WADE/v0.2/GetCatalog/GetCat
 INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
 
 SELECT content FROM http_get('http://data.owrb.ok.gov:8080/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OWRD');
+--
 
+-- CALIFORNIA 
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+
+SELECT content FROM http_get('http://wade.sdsc.edu/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=CA-DWR');
+--
 
 
 /*******************************************************************************************/
@@ -170,5 +176,5 @@ SELECT * FROM  "WADE"."CATALOG_SUMMARY_MV";
 
 
 /*******************************************************************************************/
---------------------------------------------------------------------------------------------
+---------------------------------- End of Script --------------------------------------------
 /*******************************************************************************************/
