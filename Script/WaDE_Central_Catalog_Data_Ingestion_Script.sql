@@ -44,8 +44,10 @@ SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/
 
 -- UTAH
 INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+SELECT content FROM http_get('http://www.water.utah.gov/DWRE/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=utwre');
 
-SELECT content FROM http_get('http://www.westernstateswater.org/UTDWRT_Demo/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTWRE');
+INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+SELECT content FROM http_get('http://www.water.utah.gov/DWRT/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTDWRT');
 --
 
 -- COLORADO
