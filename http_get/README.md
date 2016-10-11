@@ -11,13 +11,16 @@ Instructions for Use
 ----------
 ### For Windows
 
-Unzip the file and copy the contents into same named folder of the PostgreSQL 9.5 install (usually in C:\Program Files\PostgreSQL\9.5) (for example: Copy the contents from ‘bin’ folder into the ‘bin’ folder of the PostgreSQL 9.5 installation folder). 
+These instructions are intended for PostgreSQL version 9.5 (64bit). Unzip the file and copy the contents into same named folder of the PostgreSQL 9.5 install (usually in C:\Program Files\PostgreSQL\9.5) (for example: Copy the contents from ‘bin’ folder into the ‘bin’ folder of the PostgreSQL 9.5 installation folder). 
 The curl was compiled against the most recent SSL shipped with Windows EDB installs.  So it won't work on anything lower than PostgreSQL 9.5.2 x 64bit. Also make sure to not overwrite any other files you may have.
 Once the files have been copied into the install folder, run the following query in the database:
  
 CREATE EXTENSION http;
 
 This will create the extensions required for the http_get function to work.
+
+Downloads of the http extension binaries for PostgreSQL 9.6, 9.5, and 9.4 windows 64-bit are also available at http://www.postgresonline.com/journal/archives/371-http-extension.html. These extensions were compiled by Regina Obe, President, Paragon Corporation (email: lr@pcorp.us). 
+
 
 
 
