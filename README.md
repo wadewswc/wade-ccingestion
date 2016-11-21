@@ -5,9 +5,9 @@ A collaborative activity of the Water Data Exchange or WaDE project
 Description
 ----------
 
-This software is in the public domain, containing materials that came from the [Water Data Exchange (WaDE) program] (http://www.westernstateswater.org/wade/about-wade/), a project of the [Western States Water Council (WSWC)] (http://www.westernstateswater.org/). 
+This software is in the public domain, containing materials that came from the [Water Data Exchange (WaDE) program](http://www.westernstateswater.org/wade/about-wade/), a project of the [Western States Water Council (WSWC)](http://www.westernstateswater.org/). 
 
-WSWC initiated the Water Data Exchange or WaDE project to address the difficulties associated with accessing and creating comparable metrics from state water agency data related to water administration and planning, and to create a framework where states could share data with each other and the public in a more streamlined and cost-effective way. WaDE seeks to provide better access to water allocation, supply, and demand data that are maintained by state and other governmental agencies. For more information, see the WaDE 2015 UPDATED FACTSHEET at http://www.westernstateswater.org/wade/. 
+WSWC initiated the Water Data Exchange or WaDE project to address the difficulties associated with accessing and creating comparable metrics from state water agency data related to water administration and planning, and to create a framework where states could share data with each other and the public in a more streamlined and cost-effective way. WaDE seeks to provide better access to water allocation, supply, and demand data that are maintained by state and other governmental agencies. For more information, see the WaDE 2015 [UPDATED FACTSHEET](http://www.westernstateswater.org/wade/). 
 
 The following code performs an `http_get` call, which returns WaDE Client's Web Service in XML format, and ingests the data from the web service return into a PostgreSQL table. 
 
