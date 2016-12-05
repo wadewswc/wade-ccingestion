@@ -9,7 +9,7 @@
 
 -- Table: "WADE"."XMLContent"
 
-DROP TABLE "WADE"."XMLContent";
+DROP TABLE IF EXISTS "WADE"."XMLContent";
 
 CREATE TABLE "WADE"."XMLContent"
 (
