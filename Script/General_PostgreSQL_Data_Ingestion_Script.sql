@@ -28,12 +28,16 @@ ALTER TABLE "WADE"."XMLContent"
 ----------- Step 2: Insert XML return from http_get call into a temporary table ------------
 /*******************************************************************************************/
 
-
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
-
-SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
-
-
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to the Web service';
+        END;
+    END;
+$$;
 /*******************************************************************************************/
 --- Step 3: Remove unnecessary snippets from XML Data, And Convert character varying data type to XML ---
 /*******************************************************************************************/
