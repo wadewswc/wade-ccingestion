@@ -17,7 +17,7 @@ SET http.timeout_msec = 10000;
 
 -- Table: "WADE"."XMLContent"
 
-DROP TABLE "WADE"."XMLContent";
+DROP TABLE IF EXISTS "WADE"."XMLContent";
 
 CREATE TABLE "WADE"."XMLContent"
 (
