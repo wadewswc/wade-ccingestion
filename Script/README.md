@@ -5,13 +5,15 @@ A collaborative activity of the Water Data Exchange or WaDE project
 Description
 ----------
 
-The following Code performs a ‘http_get’ call, which returns a Web Service in XML format into PostgreSQL 9.5, and ingests the data from the Web Service return into database table.
+The following Code performs an ‘http_get’ call, which returns a Web Service in XML format into PostgreSQL 9.5, and ingests the data from the Web Service return into database table.
 
 The script creates a temporary table for the http_get calls, which stores the XML returns from the http_get call. 
 Next, the unnecessary snippets from XML Data are removed, and the ‘character varying’ data type is converted into XML data type (required for XPATH to work). 
 
 The table where the data will be ingested into is created next, and finally XPATH is used to extract data from the XML content into respective columns in the table. 
 
-If for any reason, the http_get return is empty, it will get recorded as a NULL value in the temporary table, and the later part of the code will simply skip the NULL row and complete the rest of the query.
+If for any reason, the http_get return is empty, it will be recorded as a NULL value in the temporary table, and the later portions of the code will simply skip the NULL row and complete the rest of the query.
 
 The http_get extension will give a timeout error if the web service retrieval takes too long.
+
+WaDE_Central_Catalog_Data_Ingestion_Script.sql performs the call for all states/organizations, while General_PostgreSQL_Data_Ingestion_Script.sql contains the code for a generic, single-state, single-organization call.
