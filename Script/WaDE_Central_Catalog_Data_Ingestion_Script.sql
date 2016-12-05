@@ -4,6 +4,14 @@
 
 
 /*******************************************************************************************/
+----------- Step 0: Set timeout (according to the state requiring longest time) -------------
+/*******************************************************************************************/
+
+
+SET http.timeout_msec = 10000;
+
+
+/*******************************************************************************************/
 ----------- Step 1: Create a temporary table to hold the HTTP_GET return --------------------
 /*******************************************************************************************/
 
@@ -26,63 +34,273 @@ ALTER TABLE "WADE"."XMLContent"
 
 /*******************************************************************************************/
 ----------- Step 2: Insert XML return from http_get call into a temporary table ------------
-------------------- Leave out State by trial if the script produces error ------------------
+----------------------- Warm Up run to make sure the URLs are working ----------------------
 /*******************************************************************************************/
 
 
+-- OREGON
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.wrd.state.or.us/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OREGON-WRD');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Oregon Web service';
+        END;
+    END;
+$$;
+--
 -- IDAHO
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Idaho Web service';
+        END;
+    END;
+$$;
+--
+-- UTAH
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.water.utah.gov/DWRE/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=utwre');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Utah WRE Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.water.utah.gov/DWRT/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTDWRT');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Utah DWR Web service';
+        END;
+    END;
+$$;
+--
+-- COLORADO
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Colorado/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid =CODWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Colorado Web service';
+        END;
+    END;
+$$;
+--
+-- WYOMING 
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Wyoming/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYWDC');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming Web service';
+        END;
+    END;
+$$;
+--
+-- KANSAS
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.kda.ks.gov/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=KS-KDA');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Kansas Web service';
+        END;
+    END;
+$$;
+--
+-- OKLAHOMA 
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://data.owrb.ok.gov:8080/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OWRD');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Oklahoma Web service';
+        END;
+    END;
+$$;
+--
+-- CALIFORNIA 
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.sdsc.edu/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=CA-DWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to California Web service';
+        END;
+    END;
+$$;
+
 --
 
--- OREGON
---INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DROP TABLE "WADE"."XMLContent";
 
---SELECT content FROM http_get('http://wade.wrd.state.or.us/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OREGON-WRD');
+
+/*******************************************************************************************/
+----------- Step 3: Recreate a temporary table to hold the HTTP_GET return -----------------
+/*******************************************************************************************/
+
+-- Table: "WADE"."XMLContent"
+
+CREATE TABLE "WADE"."XMLContent"
+(
+  "ID" serial NOT NULL,
+  "XML_CONTENT" character varying,
+  CONSTRAINT "XMLContent_pkey" PRIMARY KEY ("ID")
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "WADE"."XMLContent"
+  OWNER TO postgres;
+
+
+/*******************************************************************************************/
+----------- Step 4: Insert XML return from http_get call into a temporary table ------------
+---------- Comment out State by trial/Adjust timeouts if the script produces error ---------
+/*******************************************************************************************/
+
+
+-- OREGON
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.wrd.state.or.us/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OREGON-WRD');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Oregon Web service';
+        END;
+    END;
+$$;
+
+--
+
+-- IDAHO
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Idaho/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=IDWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Idaho Web service';
+        END;
+    END;
+$$;
 --
 
 -- UTAH
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
-SELECT content FROM http_get('http://www.water.utah.gov/DWRE/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=utwre');
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.water.utah.gov/DWRE/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=utwre');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Utah WRE Web service';
+        END;
+    END;
+$$;
 
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
-SELECT content FROM http_get('http://www.water.utah.gov/DWRT/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTDWRT');
+
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.water.utah.gov/DWRT/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=UTDWRT');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Utah DWR Web service';
+        END;
+    END;
+$$;
+
 --
 
 -- COLORADO
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Colorado/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid =CODWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Colorado Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://www.westernstateswater.org/Colorado/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid =CODWR');
 --
 
 -- WYOMING 
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Wyoming/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYWDC');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://www.westernstateswater.org/Wyoming/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYWDC');
 --
 
 -- KANSAS
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.kda.ks.gov/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=KS-KDA');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Kansas Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://wade.kda.ks.gov/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=KS-KDA');
 --
 
 -- OKLAHOMA 
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://data.owrb.ok.gov:8080/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OWRD');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Oklahoma Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://data.owrb.ok.gov:8080/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=OWRD');
 --
 
 -- CALIFORNIA 
-INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://wade.sdsc.edu/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=CA-DWR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to California Web service';
+        END;
+    END;
+$$;
 
-SELECT content FROM http_get('http://wade.sdsc.edu/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=CA-DWR');
 --
 
 
 /*******************************************************************************************/
---- Step 3: Remove unnecessary snippets from XML Data, And Convert character varying data type to XML ---
+--- Step 5: Remove unnecessary snippets from XML Data, And Convert character varying data type to XML ---
 /*******************************************************************************************/
 
 
@@ -114,7 +332,7 @@ SELECT * FROM "WADE"."XMLContent";
 
 
 /*******************************************************************************************/
-------------- Step 4: Create the table where you want to ingest the data into --------------
+------------- Step 6: Create the table where you want to ingest the data into --------------
 /*******************************************************************************************/
 
 
@@ -147,7 +365,7 @@ GRANT SELECT ON TABLE "WADE"."CATALOG_SUMMARY_MV" TO "WADE_APP";
   
 
 /*******************************************************************************************/
------------------ Step 5: Insert Cleaned up XML Data into created -table -------------------
+----------------- Step 7: Insert Cleaned up XML Data into created -table -------------------
 /*******************************************************************************************/
 
 
@@ -168,6 +386,9 @@ FROM (
 SELECT 
     unnest(xpath('/WaDECatalog/Organization',"XML_CONTENT")) As exp
 FROM "WADE"."XMLContent") As foo;
+
+DELETE FROM "WADE"."CATALOG_SUMMARY_MV"
+ WHERE "ORGANIZATION_ID" = 'SAMPLE1' OR "ORGANIZATION_ID" = 'SAMPLE2' OR "ORGANIZATION_ID" = 'SAMPLE3';
 
 
 /*******************************************************************************************/
