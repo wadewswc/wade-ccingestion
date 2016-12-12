@@ -17,7 +17,7 @@ SET http.timeout_msec = 10000;
 
 -- Table: "WADE"."XMLContent"
 
-DROP TABLE "WADE"."XMLContent";
+DROP TABLE IF EXISTS "WADE"."XMLContent";
 
 CREATE TABLE "WADE"."XMLContent"
 (
@@ -104,7 +104,18 @@ DO $$
 		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
 		SELECT content FROM http_get('http://www.westernstateswater.org/Wyoming/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYWDC');
 	EXCEPTION
-		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming Web service';
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming WDC Web service';
+        END;
+    END;
+$$;
+
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/WYSEO/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYSEO');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming WYSEO Web service';
         END;
     END;
 $$;
@@ -254,6 +265,16 @@ DO $$
     END;
 $$;
 
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/WYSEO/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=WYSEO');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Wyoming WYSEO Web service';
+        END;
+    END;
+$$;
 --
 
 -- KANSAS
@@ -338,7 +359,7 @@ SELECT * FROM "WADE"."XMLContent";
 
 -- Table: "WADE"."CATALOG_SUMMARY_MV"
 
-DROP TABLE "WADE"."CATALOG_SUMMARY_MV";
+DROP TABLE IF EXISTS "WADE"."CATALOG_SUMMARY_MV";
 
 CREATE TABLE "WADE"."CATALOG_SUMMARY_MV"
 (
