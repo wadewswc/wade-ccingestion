@@ -237,7 +237,7 @@ SELECT * FROM "WADE"."XMLContent";
 
 -- Table: "WADE"."CATALOG_SUMMARY_MV"
 
---DROP TABLE IF EXISTS "WADE"."CATALOG_SUMMARY_MV_DTON";
+DROP TABLE IF EXISTS "WADE"."CATALOG_SUMMARY_MV_DTON";
 
 CREATE TABLE "WADE"."CATALOG_SUMMARY_MV_DTON"
 (
@@ -253,7 +253,9 @@ CREATE TABLE "WADE"."CATALOG_SUMMARY_MV_DTON"
   "COUNTY_FIPS" character(5),
   "HUC" character varying(12),
   "JOIN_FIELD" character varying (100),
-  "SYM_TOGGLE" character varying (5),
+  "SYM_TOGGLE_RU" character varying (5),
+  "SYM_TOGGLE_HUC" character varying (5),
+  "SYM_TOGGLE_CO " character varying (5),
   "GET_CAT_RU" character varying (400),
   "GET_CAT_HUC" character varying (400),
   "GET_CAT_CO" character varying (400),
