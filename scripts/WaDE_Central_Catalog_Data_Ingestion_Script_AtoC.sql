@@ -38,7 +38,17 @@ ALTER TABLE "WADE"."XMLContent"
 /*******************************************************************************************/
 
 
--- ALASKA Alaska DNR Catalog will be retrieved here.
+-- ALASKA Alaska DNR
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Alaska/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=AKDNR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Alaska web service';
+        END;
+    END;
+$$;
 
 -- ARIZONA
 DO $$ 
@@ -102,7 +112,18 @@ ALTER TABLE "WADE"."XMLContent"
 /*******************************************************************************************/
 
 
--- ALASKA Alaska DNR Catalog will be retrieved here.
+
+-- ALASKA Alaska DNR
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/Alaska/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=AKDNR');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to Alaska web service';
+        END;
+    END;
+$$;
 
 -- ARIZONA
 DO $$ 
@@ -195,7 +216,9 @@ CREATE TABLE "WADE"."CATALOG_SUMMARY_MV_ATOC"
   "REPORTING_UNIT_NAME" character varying (300),
   "COUNTY_FIPS" character(5),
   "HUC" character varying(12),
-  "JOIN_FIELD" character varying (100),
+  "JOIN_FIELD_RU" character varying (100),
+  "JOIN_FIELD_HUC" character varying (100),
+  "JOIN_FIELD_CO" character varying (100),
   "SYM_TOGGLE_RU" character varying (5),
   "SYM_TOGGLE_HUC" character varying (5),
   "SYM_TOGGLE_CO" character varying (5),
