@@ -62,6 +62,20 @@ DO $$
 $$;
 --
 
+-- TEXAS
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/TCEQ/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=TCEQ');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to TCEQ Web service';
+        END;
+    END;
+$$;
+
+--
+
 -- WYOMING 
 DO $$ 
     BEGIN
@@ -151,6 +165,20 @@ DO $$
 $$;
 --
 
+-- TEXAS
+DO $$ 
+    BEGIN
+        BEGIN
+		INSERT INTO "WADE"."XMLContent" ("XML_CONTENT")
+		SELECT content FROM http_get('http://www.westernstateswater.org/TCEQ/WADE/v0.2/GetCatalog/GetCatalog_GetAll.php?orgid=TCEQ');
+	EXCEPTION
+		WHEN internal_error THEN RAISE NOTICE 'Problem while connecting to TCEQ Web service';
+        END;
+    END;
+$$;
+
+--
+
 -- WYOMING 
 DO $$ 
     BEGIN
@@ -228,7 +256,7 @@ SELECT * FROM "WADE"."XMLContent";
 
 -- Table: "WADE"."CATALOG_SUMMARY_MV"
 
---DROP TABLE IF EXISTS "WADE"."CATALOG_SUMMARY_MV_TTOZ";
+DROP TABLE IF EXISTS "WADE"."CATALOG_SUMMARY_MV_TTOZ";
 
 CREATE TABLE "WADE"."CATALOG_SUMMARY_MV_TTOZ"
 (
@@ -239,12 +267,16 @@ CREATE TABLE "WADE"."CATALOG_SUMMARY_MV_TTOZ"
   "DATACATEGORY" text NOT NULL,
   "DATATYPE" text NOT NULL,
   "STATE" character varying(2),
-  "REPORT_UNIT_ID" character varying(35) NOT NULL,
+  "REPORT_UNIT_ID" character varying(35),
   "REPORTING_UNIT_NAME" character varying(300),
   "COUNTY_FIPS" character(5),
   "HUC" character varying(12),
-    "JOIN_FIELD" character varying (100),
-  "SYM_TOGGLE" character varying (5),
+  "JOIN_FIELD_RU" character varying (100),
+  "JOIN_FIELD_HUC" character varying (100),
+  "JOIN_FIELD_CO" character varying (100),
+  "SYM_TOGGLE_RU" character varying (5),
+  "SYM_TOGGLE_HUC" character varying (5),
+  "SYM_TOGGLE_CO" character varying (5),
   "GET_CAT_RU" character varying (400),
   "GET_CAT_HUC" character varying (400),
   "GET_CAT_CO" character varying (400),
